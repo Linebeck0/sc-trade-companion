@@ -104,6 +104,7 @@ task jlink(dependsOn: 'jdeps') {
 			workingDir = projectDir
 	        commandLine 'jlink', '--output', "$binariesDir/jre", '--add-modules', 'java.base,java.compiler,java.desktop,java.instrument,java.management,java.naming,java.net.http,java.prefs,java.scripting,java.sql,jdk.jfr,jdk.unsupported,jdk.crypto.ec,jdk.accessibility' // TODO use "${tasks.jdeps.jdeps}"
 		}
+		
 	}
 }
 
@@ -126,5 +127,12 @@ task copyStartScript(type: Copy) {
 	include "${rootProject.name}-admin.bat"
 }
 
-task dist(dependsOn: ['copyJar', 'copyPaddleOcr', 'copyStartScript', 'jlink']) {
+task copyWindowsOCR(type: Copy, dependsOn: jlink) {
+	from "./windows-ocr-wrapper/dist"
+	into "$binariesDir/jre/bin/windows-ocr-wrapper/dist"
+	include "windows-ocr-wrapper.exe"
+	include "windows-ocr-wrapper.pdb"
+}
+
+task dist(dependsOn: ['copyJar', 'copyPaddleOcr', 'copyStartScript', 'jlink', 'copyWindowsOCR']) {
 }

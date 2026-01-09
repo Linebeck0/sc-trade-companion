@@ -32,6 +32,7 @@ import tools.sctrade.companion.exceptions.PublicationException;
 import tools.sctrade.companion.utils.AsynchronousProcessor;
 import tools.sctrade.companion.utils.LocalizationUtil;
 
+
 /**
  * Asynchronous processor to send commodity listings to sc-trade.tools.
  */
@@ -54,8 +55,7 @@ public class ScTradeToolsClient extends AsynchronousProcessor<CommoditySubmissio
       NotificationService notificationService, String version) {
     super(notificationService);
 
-    
-    /* Original Http Client
+    /*
      * HttpClient httpClient = HttpClient.create(); httpClient =
      * httpClient.resolver(nameResolverSpec -> nameResolverSpec.retryTcpOnTimeout(true));
      * ReactorClientHttpConnector connector = new ReactorClientHttpConnector(httpClient);
@@ -79,6 +79,7 @@ public class ScTradeToolsClient extends AsynchronousProcessor<CommoditySubmissio
         .defaultHeader("x-companion-version", version)
         .defaultHeader(HttpHeaders.USER_AGENT, "sc-companion/" + version)
         .defaultHeader(HttpHeaders.ACCEPT, MediaType.APPLICATION_JSON_VALUE).build();
+
   }
 
   @Override
